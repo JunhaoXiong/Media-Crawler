@@ -42,8 +42,7 @@ def search_creators(query, max_results = 10):
     print("API response:", response)
     return response["items"]
 
-def compute_credibility_score(stats):
-    keywords = ["finance", "investing", "wealth", "money", "stock"]
+def compute_credibility_score(stats, keywords):
     score = 0
     if stats["subscriber_count"] > 10000:
         score += 1
@@ -68,6 +67,10 @@ def save_to_csv(data, filename="youtube_creators.csv"):
 ## Main function
 if __name__ == "__main__":
     print("Searching for personal finance YouTube creators...")
+    query = input("Enter topic to search for creators (e.g. finance, AI, health): ").strip()
+    keyword_input = input("Enter credibility keywords (comma-separated): ").strip()
+    keywords = [k.strip().lower() for k in keyword_input.split(",") if k.strip()]
+    
     creators = search_creators("personal finance", max_results = 5)
     all_creator_data = []
 
