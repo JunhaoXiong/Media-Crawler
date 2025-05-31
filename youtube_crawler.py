@@ -70,8 +70,8 @@ if __name__ == "__main__":
     query = input("Enter topic to search for creators (e.g. finance, AI, health): ").strip()
     keyword_input = input("Enter credibility keywords (comma-separated): ").strip()
     keywords = [k.strip().lower() for k in keyword_input.split(",") if k.strip()]
-    
-    creators = search_creators("personal finance", max_results = 5)
+
+    creators = search_creators(query, max_results = 5)
     all_creator_data = []
 
     if not creators:
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         channel_id = c["snippet"]["channelId"]
         details = get_channel_details(channel_id)
         if details:
-            score = compute_credibility_score(details)
+            score = compute_credibility_score(details, keywords)
             details["credibility_score"] = score
             all_creator_data.append(details)
             print(details)
